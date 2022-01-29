@@ -2,30 +2,72 @@
 
 namespace app\models;
 
-class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
-{
-    public $id;
-    public $username;
-    public $password;
-    public $authKey;
-    public $accessToken;
+use Yii;
+use yii\db\ActiveRecord;
+use yii\web\IdentityInterface;
 
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-    ];
+/**
+ * This is the model class for table "users".
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property int $level_id
+ * @property int $department_id
+ * @property int $school_id
+ * @property string|null $created_at
+ * @property string|null $updated_at
+ *
+ * @property Department $department
+ * @property Level $level
+ * @property School $school
+ * @property UserCourse[] $userCourses
+ */
+class User extends ActiveRecord implements IdentityInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public static function tableName()
+    {
+        return 'users';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['name', 'email', 'password', 'level_id', 'department_id', 'school_id'], 'required'],
+            [['level_id', 'department_id', 'school_id'], 'integer'],
+            [['created_at', 'updated_at'], 'safe'],
+            [['name', 'email', 'password'], 'string', 'max' => 100],
+            [['department_id'], 'exist', 'skipOnError' => true, 'targetClass' => Department::className(), 'targetAttribute' => ['department_id' => 'id']],
+            [['level_id'], 'exist', 'skipOnError' => true, 'targetClass' => Level::className(), 'targetAttribute' => ['level_id' => 'id']],
+            [['school_id'], 'exist', 'skipOnError' => true, 'targetClass' => School::className(), 'targetAttribute' => ['school_id' => 'id']],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'name' => 'Name',
+            'email' => 'Email',
+            'password' => 'Password',
+            'level_id' => 'Level ID',
+            'department_id' => 'Department ID',
+            'school_id' => 'School ID',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+        ];
+    }
+
 
 
     /**
@@ -100,5 +142,46 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
     public function validatePassword($password)
     {
         return $this->password === $password;
+    }
+
+
+    /**
+     * Gets query for [[Department]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDepartment()
+    {
+        return $this->hasOne(Department::className(), ['id' => 'department_id']);
+    }
+
+    /**
+     * Gets query for [[Level]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLevel()
+    {
+        return $this->hasOne(Level::className(), ['id' => 'level_id']);
+    }
+
+    /**
+     * Gets query for [[School]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSchool()
+    {
+        return $this->hasOne(School::className(), ['id' => 'school_id']);
+    }
+
+    /**
+     * Gets query for [[UserCourses]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserCourses()
+    {
+        return $this->hasMany(UserCourse::className(), ['user_id' => 'id']);
     }
 }
