@@ -8,6 +8,10 @@ use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\User;
+use app\models\School;
+use app\models\Department;
+use app\models\Faculty;
+use app\models\Level;
 
 class SiteController extends Controller
 {
@@ -138,6 +142,25 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    public function actionProfile()
+    {
+        $user = User::getAuthUser();
+        $user->faculty_id = $user->department->faculty->id;
+
+        $levels = Level::find()->all();
+        $departments = Department::find()->all();
+        $schools = School::find()->all();
+        $faculties = Faculty::find()->all();
+
+        return $this->render('profile', [
+            "user" => $user,
+            "levels" => $levels,
+            "departments" => $departments,
+            "schools" => $schools,
+            "faculties" => $faculties
+        ]);
     }
 
 }

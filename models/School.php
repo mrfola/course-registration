@@ -12,7 +12,7 @@ use Yii;
  * @property string|null $created_at
  * @property string|null $updated_at
  *
- * @property Users[] $users
+ * @property User[] $users
  */
 class School extends \yii\db\ActiveRecord
 {
@@ -50,12 +50,12 @@ class School extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Users]].
+     * Gets query for [[User]].
      *
      * @return \yii\db\ActiveQuery
      */
     public function getUsers()
     {
-        return $this->hasMany(Users::className(), ['school_id' => 'id']);
+        return $this->hasMany(User::className(), ['school_id' => 'id']);
     }
 }

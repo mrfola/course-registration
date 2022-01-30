@@ -13,9 +13,9 @@ use Yii;
  * @property string|null $created_at
  * @property string|null $updated_at
  *
- * @property Courses[] $courses
- * @property Faculties $faculty
- * @property Users[] $users
+ * @property Course[] $courses
+ * @property Faculty $faculty
+ * @property User[] $users
  */
 class Department extends \yii\db\ActiveRecord
 {
@@ -37,7 +37,7 @@ class Department extends \yii\db\ActiveRecord
             [['faculty_id'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['name'], 'string', 'max' => 100],
-            [['faculty_id'], 'exist', 'skipOnError' => true, 'targetClass' => Faculties::className(), 'targetAttribute' => ['faculty_id' => 'id']],
+            [['faculty_id'], 'exist', 'skipOnError' => true, 'targetClass' => Faculty::className(), 'targetAttribute' => ['faculty_id' => 'id']],
         ];
     }
 
@@ -56,13 +56,13 @@ class Department extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Courses]].
+     * Gets query for [[Course]].
      *
      * @return \yii\db\ActiveQuery
      */
     public function getCourses()
     {
-        return $this->hasMany(Courses::className(), ['department_id' => 'id']);
+        return $this->hasMany(Course::className(), ['department_id' => 'id']);
     }
 
     /**
@@ -72,16 +72,16 @@ class Department extends \yii\db\ActiveRecord
      */
     public function getFaculty()
     {
-        return $this->hasOne(Faculties::className(), ['id' => 'faculty_id']);
+        return $this->hasOne(Faculty::className(), ['id' => 'faculty_id']);
     }
 
     /**
-     * Gets query for [[Users]].
+     * Gets query for [[User]].
      *
      * @return \yii\db\ActiveQuery
      */
     public function getUsers()
     {
-        return $this->hasMany(Users::className(), ['department_id' => 'id']);
+        return $this->hasMany(User::className(), ['department_id' => 'id']);
     }
 }

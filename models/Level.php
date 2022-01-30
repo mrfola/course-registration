@@ -12,8 +12,8 @@ use Yii;
  * @property string|null $created_at
  * @property string|null $updated_at
  *
- * @property Courses[] $courses
- * @property Users[] $users
+ * @property Course[] $courses
+ * @property User[] $users
  */
 class Level extends \yii\db\ActiveRecord
 {
@@ -51,22 +51,22 @@ class Level extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Courses]].
+     * Gets query for [[Course]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCourses()
+    public function getCourse()
     {
-        return $this->hasMany(Courses::className(), ['level_id' => 'id']);
+        return $this->hasMany(Course::className(), ['level_id' => 'id']);
     }
 
     /**
-     * Gets query for [[Users]].
+     * Gets query for [[User]].
      *
      * @return \yii\db\ActiveQuery
      */
     public function getUsers()
     {
-        return $this->hasMany(Users::className(), ['level_id' => 'id']);
+        return $this->hasMany(User::className(), ['level_id' => 'id']);
     }
 }

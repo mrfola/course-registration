@@ -12,7 +12,7 @@ use Yii;
  * @property string|null $created_at
  * @property string|null $updated_at
  *
- * @property Departments[] $departments
+ * @property Department[] $departments
  */
 class Faculty extends \yii\db\ActiveRecord
 {
@@ -56,6 +56,6 @@ class Faculty extends \yii\db\ActiveRecord
      */
     public function getDepartments()
     {
-        return $this->hasMany(Departments::className(), ['faculty_id' => 'id']);
+        return $this->hasMany(Department::className(), ['faculty_id' => 'id']);
     }
 }

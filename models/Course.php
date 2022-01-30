@@ -15,9 +15,9 @@ use Yii;
  * @property string|null $created_at
  * @property string|null $updated_at
  *
- * @property Departments $department
- * @property Levels $level
- * @property UserCourses[] $userCourses
+ * @property Department $department
+ * @property Level $level
+ * @property UserCourse[] $userCourses
  */
 class Course extends \yii\db\ActiveRecord
 {
@@ -39,8 +39,8 @@ class Course extends \yii\db\ActiveRecord
             [['level_id', 'department_id'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['name', 'course_code'], 'string', 'max' => 100],
-            [['department_id'], 'exist', 'skipOnError' => true, 'targetClass' => Departments::className(), 'targetAttribute' => ['department_id' => 'id']],
-            [['level_id'], 'exist', 'skipOnError' => true, 'targetClass' => Levels::className(), 'targetAttribute' => ['level_id' => 'id']],
+            [['department_id'], 'exist', 'skipOnError' => true, 'targetClass' => Department::className(), 'targetAttribute' => ['department_id' => 'id']],
+            [['level_id'], 'exist', 'skipOnError' => true, 'targetClass' => Level::className(), 'targetAttribute' => ['level_id' => 'id']],
         ];
     }
 
@@ -67,7 +67,7 @@ class Course extends \yii\db\ActiveRecord
      */
     public function getDepartment()
     {
-        return $this->hasOne(Departments::className(), ['id' => 'department_id']);
+        return $this->hasOne(Department::className(), ['id' => 'department_id']);
     }
 
     /**
@@ -77,16 +77,16 @@ class Course extends \yii\db\ActiveRecord
      */
     public function getLevel()
     {
-        return $this->hasOne(Levels::className(), ['id' => 'level_id']);
+        return $this->hasOne(Level::className(), ['id' => 'level_id']);
     }
 
     /**
-     * Gets query for [[UserCourses]].
+     * Gets query for [[UserCourse]].
      *
      * @return \yii\db\ActiveQuery
      */
     public function getUserCourses()
     {
-        return $this->hasMany(UserCourses::className(), ['course_id' => 'id']);
+        return $this->hasMany(UserCourse::className(), ['course_id' => 'id']);
     }
 }

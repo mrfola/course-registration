@@ -17,7 +17,15 @@ use yii\helpers\Url;
         </div>
 
         <div class="row">
-
+        <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Profile</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <a href="<?= Url::to(['site/profile']); ?>" class="btn btn-primary">View</a>
+                    </div>
+                </div>      
+            </div>
             <div class="col-lg-4">
                 <div class="card">
                     <div class="card-body">
@@ -31,19 +39,9 @@ use yii\helpers\Url;
             <div class="col-lg-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Register Course</h5>
+                        <h5 class="card-title">Accouncements</h5>
                         <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Register</a>
-                    </div>
-                </div>      
-            </div>
-
-            <div class="col-lg-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Courses</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Button</a>
+                        <a href="#" class="btn btn-primary">View</a>
                     </div>
                 </div>      
             </div>
