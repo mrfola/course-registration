@@ -163,4 +163,22 @@ class SiteController extends Controller
         ]);
     }
 
+    public function actionUpdate()
+    {
+        $session = Yii::$app->session;
+        $request = Yii::$app->request->post();
+
+        $user = User::getAuthUser();
+        $user->attributes = $request; 
+        if($user->save())
+        {            
+            $session->setFlash('successMessage', 'You have successfully updated your profile.');
+            return $this->redirect(['site/profile']);
+        }else
+        {
+            $session->setFlash('errorMessage', $user->getErrors());
+            return $this->redirect(["site/profile"]);
+        }
+    }
+
 }

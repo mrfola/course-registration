@@ -11,7 +11,7 @@ use yii\helpers\Url;
 </head>
 <body>
 
-    <div class="container dashboard-container">
+    <div class="container">
         <div class="row py-4">
             <h1>Dashboard</h1>
         </div>

@@ -11,12 +11,12 @@ use yii\bootstrap4\ActiveForm;
     <title>Profile</title>
 </head>
 <body>
-    <div class="container-fluid">
+    <div class="container">
         <div class="row py-4">
             <h1>Profile</h1>
         </div>
-
         <div class="row">
+
             <?php
                 $session = Yii::$app->session;
 
@@ -29,70 +29,86 @@ use yii\bootstrap4\ActiveForm;
                     }
                 }
 
+                if($session->hasFlash('successMessage'))
+                {
+                    $success = $session->getFlash('successMessage');
+                    echo "<div class='alert alert-success' role='alert'>$success</div>";
+                }
+
                 ActiveForm::begin([
                     "method" => "post",
-                    "action" => ["site/update"]
+                    "action" => ["site/update"],
+                    "options" => ["class" => "profile-form"]
                 ]);
             ?>
 
-            <div class="form-group">
-                <div class="mb-4">
-                    <label for="Name">Name</label>
-                    <input class="form-control" type="text" name="name" value="<?= $user->name; ?>" required>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Name</span>
+                    </div>
+                    <input type="text" name="name" class="form-control" placeholder="Name" value="<?= $user->name; ?>" required>
                 </div>
-                <div class="mb-4">
-                    <label for="email">Email</label>
-                    <input type="email" name="email" class="form-control" value="<?= $user->email; ?>" required>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Email</span>
+                    </div>
+                    <input type="text" name="email" class="form-control" placeholder="Email" value="<?= $user->email; ?>" required>
                 </div>
-                <div class="mb-4">
-                    <label for="level_id">Level</label>
-                    <select name="level_id" class="form-control" required>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="level_id">Level</label>
+                    </div>
+                    <select name="level_id" class="custom-select" required>
                         <?php foreach($levels as $level){ ?>
-                            <option value='<?=$level->id;?>' <?= $level->id == $user->level_id ? 'selected=selected' : '';?>>
+                            <option value='<?=$level->id;?>' <?= $level->id == $user->level_id ? 'selected' : '';?>>
                                 <?= $level->name; ?>
                             </option>
                         <?php } ?>
                     </select>
                 </div>
-                <div class="mb-4">
-                    <label for="department_id">Department</label>
-                    <select name="department_id" class="form-control" required>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="department_id">Department</label>
+                    </div>
+                    <select name="department_id" class="custom-select" required>
                         <?php foreach($departments as $department){ ?>
-                            <option value='<?=$department->id;?>' <?= $department->id == $user->department_id ? 'selected=selected' : '';?>>
+                            <option value='<?=$department->id;?>' <?= $department->id == $user->department_id ? 'selected' : '';?>>
                                 <?= $department->name; ?>
                             </option>
                         <?php } ?>
                     </select>
                 </div>
-                <div class="mb-4">
-                    <label for="faculty_id">Faculty</label>
-                    <select name="faculty_id" class="form-control" required>
-                    <?php foreach($faculties as $faculty){ ?>
-                            <option value='<?=$faculty->id;?>' <?= $faculty->id == $user->faculty_id ? 'selected=selected' : '';?>>
-                            <?=$faculty->name; ?>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="faculty_id">Faculty</label>
+                    </div>
+                    <select name="faculty_id" class="custom-select" required>
+                        <?php foreach($faculties as $faculty){ ?>
+                            <option value='<?=$faculty->id;?>' <?= $faculty->id == $user->faculty_id ? 'selected' : '';?>>
+                                <?= $faculty->name; ?>
                             </option>
                         <?php } ?>
                     </select>
                 </div>
-                <div class="mb-4">
-                    <label for="school_id">School</label>
-                    <select name="school_id" class="form-control" required>
-                    <?php foreach($schools as $school){ ?>
-                            <option value='<?=$school->id;?>' <?= $school->id == $user->school_id ? 'selected=selected' : '';?>>
-                                <?=$school->name; ?>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="school_id">School</label>
+                    </div>
+                    <select name="school_id" class="custom-select" required>
+                        <?php foreach($schools as $school){ ?>
+                            <option value='<?=$school->id;?>' <?= $school->id == $user->school_id ? 'selected' : '';?>>
+                                <?= $school->name; ?>
                             </option>
                         <?php } ?>
                     </select>
                 </div>
 
-                <button class="btn btn-primary my-2" type="submit">Register</button>
+                <button class="btn btn-primary my-2" type="submit">Update</button>
 
             </div>
             <?php
                 ActiveForm::end();
             ?>
         </div>
-    </div>
-
 </body>
 </html>

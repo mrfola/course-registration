@@ -10,7 +10,7 @@
     <title>Register</title>
 </head>
 <body>
-    <div class="contanier">
+    <div class="container">
         <div class="row">
             <h1 style="color:black;">Register</h1>
         </div>
