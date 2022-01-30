@@ -169,6 +169,12 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasMany(UserCourse::className(), ['user_id' => 'id']);
     }
 
+    public function getCourses()
+    {
+        return $this->hasMany(Course::className(), ['id' => 'course_id'])
+                    ->viaTable('user_courses', ['user_id' => 'id']);
+    }
+
     public static function findByEmail($email)
     {
         return self::findOne(['email' => $email]);

@@ -22,33 +22,35 @@ class CourseController extends Controller
     public function actionCourses()
     {
         $user = User::getAuthUser();
-        
-        $courses = [];
 
-        if($userCourses = $user->userCourses)
-        {
-            foreach($userCourses as $userCourse)
+        //courses user can still register for based on their department (i.e, they have not registered for it before) 
+        $availableCourses = Course::find()->all();
+
+        //all courses a user has registered for
+        $courses = $user->courses;
+
+        if($courses)
+        { 
+            foreach($courses as $course)
             {
-                $course = $userCourse->course;
-
-                $courses[] = [
-                    "user_course_id" => $userCourse->id,
-                    "name" => $course->name,
-                    "course_code" => $course->course_code,
-                    "created_at" => $userCourse->created_at
-                ];    
+                foreach($availableCourses as $singleCourseId => $singleCourse)
+                {
+                   if($singleCourse['id'] == $course['id'])
+                   {
+                    unset($availableCourses[$singleCourseId]);
+                   }
+                }   
             }
         }   
-        
-        
-        return $this->render('courses', ["courses" => $courses]);
+    
+        return $this->render('courses', ["courses" => $courses, "availableCourses" => $availableCourses]);
     }
 
     public function actionRegister()
     {
         $request = Yii::$app->request->post();
 
-        $user = User::findAuthUser();
+        $user = User::getAuthUser();
 
         $userCourse = new UserCourse();
         $userCourse->course_id = $request["course_id"];
@@ -75,7 +77,7 @@ class CourseController extends Controller
     {
         $request = Yii::$app->request->post();
 
-        $userCourse = UserCourse::findOne($request["user_course_id"]);
+        $userCourse = UserCourse::findOne(["course_id" => $request["course_id"]]);
 
         if($userCourse->delete())
         {

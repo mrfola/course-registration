@@ -17,7 +17,7 @@ use yii\helpers\Url;
         </div>
 
         <div class="row">
-        <div class="col-lg-4">
+            <div class="col-lg-4 my-2">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Profile</h5>
@@ -26,7 +26,7 @@ use yii\helpers\Url;
                     </div>
                 </div>      
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 my-2">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Courses</h5>
@@ -36,10 +36,30 @@ use yii\helpers\Url;
                 </div>      
             </div>
 
-            <div class="col-lg-4">
+            <div class="col-lg-4 my-2">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Accouncements</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <a href="#" class="btn btn-primary">View</a>
+                    </div>
+                </div>      
+            </div>
+
+            <div class="col-lg-4 my-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Results</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <a href="#" class="btn btn-primary">View</a>
+                    </div>
+                </div>      
+            </div>
+
+            <div class="col-lg-4 my-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Department Calendar</h5>
                         <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
                         <a href="#" class="btn btn-primary">View</a>
                     </div>

@@ -40,7 +40,6 @@
             $success = $session->getFlash('successMessage');
             echo "<div class='alert alert-success' role='alert'>$success</div>";
         }
-
         if(!$courses)
         {
             echo "You have not registered for any courses yet.";
@@ -67,18 +66,46 @@
                         <td><?= $course["course_code"]; ?></td>
                         <td><?= $course["created_at"]; ?></td>
                         <td>
-                            <?php
-                            ActiveForm::begin([
-                                "action" => ["course/destroy"],
-                                "method" => "post"
-                            ]);
-                            ?>
-                            <input type="hidden" name="user_course_id" value="<?=$course['user_course_id'];?>">
-                            <?= Html::submitButton(FA::icon('trash', ['class' => 'red action', 'type' => 'submit'])->size(FA::SIZE_2X));?>
-                            
-                            <?php ActiveForm::end(); ?>
+                        <?= FA::icon('trash', ['class' => 'red action', 'data-toggle' => 'modal', 'data-target' => "#deleteCourse".$course['id']])->size(FA::SIZE_2X);?>
                         </td>
-                        </tr>                    
+                        </tr>    
+                        
+                        <!-- Delete Course Confirmation Modal -->
+                        <div class="modal fade" id="deleteCourse<?= $course["id"]; ?>" tabindex="-1" aria-labelledby="deleteCourse<?= $course["id"]; ?>" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteCourse<?= $course["id"]; ?>">Delete Course</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <?php
+                                ActiveForm::begin([
+                                    "action" => ["course/destroy"],
+                                    "method" => "post"
+                                ]);
+                            ?>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <div class="p4">
+                                        <p>Are you sure you want to remove this course: <b> <?= $course['name'];?></b></p>
+                                    </div>
+                                    <input type="hidden" name="course_id" value="<?=$course['id'];?>">
+                                                
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </div>
+                            <?php
+                            ActiveForm::end();
+                            ?>
+                            </div>
+                        </div>
+                        </div>
+
                     <?php } ?>
                 </tbody>
             </table>
@@ -100,6 +127,12 @@
             </button>
         </div>
         <?php
+        if(!($availableCourses && count($availableCourses) > 0))
+        {
+            echo "<p class='p-4'> There are currently no more courses for you to add </p>";
+        }else
+        {
+
         ActiveForm::begin([
             "action" => ["course/register"],
             "method" => "post"
@@ -108,10 +141,18 @@
         <div class="modal-body">
             <div class="form-group">
                 <div class="p4">
-                    <label for="course_id">Course</label>
                     
-                    <select name="course_id" id="" class="form-control">
-                        <option value="1">Course</option>
+                        <label for="course_id">Course</label>
+
+                        <select name="course_id" id="" class="form-control">
+                            <?php
+                            foreach($availableCourses as $availableCourse)
+                            { 
+                            ?>
+                                <option value="<?= $availableCourse['id']; ?>"><?= $availableCourse['name']; ?></option>
+                            <?php
+                            }
+                            ?>
                     </select>
                 </div>
             </div>
@@ -122,10 +163,14 @@
         </div>
         <?php
         ActiveForm::end();
+    }
+
         ?>
         </div>
     </div>
     </div>
+
+
 
 </body>
 </html>
