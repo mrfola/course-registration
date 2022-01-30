@@ -32,6 +32,7 @@ class CourseController extends Controller
                 $course = $userCourse->course;
 
                 $courses[] = [
+                    "user_course_id" => $userCourse->id,
                     "name" => $course->name,
                     "course_code" => $course->course_code,
                     "created_at" => $userCourse->created_at
@@ -65,6 +66,29 @@ class CourseController extends Controller
             //flash error message
             $session = Yii::$app->session;
             $session->setFlash('errorMessage', $userCourse->getErrors());
+            return $this->redirect(["course/courses"]);
+        }
+    }
+
+
+    public function actionDestroy()
+    {
+        $request = Yii::$app->request->post();
+
+        $userCourse = UserCourse::findOne($request["user_course_id"]);
+
+        if($userCourse->delete())
+        {
+            //flash error message
+            $session = Yii::$app->session;
+            $session->setFlash('successMessage', "Course Succcessfully Deleted");
+            return $this->redirect(["course/courses"]);
+        }else
+        {
+            $errorMessage = [["An error occured. Couldn't delete."]];
+            //flash error message
+            $session = Yii::$app->session;
+            $session->setFlash('errorMessage', $errorMessage);
             return $this->redirect(["course/courses"]);
         }
     }

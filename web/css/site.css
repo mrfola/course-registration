@@ -83,3 +83,20 @@ a.desc:after {
     outline: none;
 }
 
+.course-table button
+{
+    padding: 0;
+    background: transparent;
+    border: 0;
+}
+
+.red
+{
+    color:red;
+}
+
+.action
+{
+    cursor: pointer;
+}
+

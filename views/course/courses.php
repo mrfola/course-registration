@@ -1,5 +1,7 @@
 <?php
     use yii\bootstrap4\ActiveForm;
+    use rmrevin\yii\fontawesome\FA;
+    use yii\helpers\Html;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,7 +49,7 @@
         {
         ?>
         <div class="row">
-            <table class="table table-striped">
+            <table class="table table-striped course-table">
                 <thead>
                     <tr>
                     <th scope="col">#</th>
@@ -58,13 +60,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($courses as $course) {?>
+                    <?php $i=1; foreach($courses as $course) {?>
                         <tr>
-                        <th scope="row">1</th>
+                        <th scope="row"><?= $i++; ?></th>
                         <td><?= $course["name"]; ?></td>
                         <td><?= $course["course_code"]; ?></td>
                         <td><?= $course["created_at"]; ?></td>
-                        <td>Delete</td>
+                        <td>
+                            <?php
+                            ActiveForm::begin([
+                                "action" => ["course/destroy"],
+                                "method" => "post"
+                            ]);
+                            ?>
+                            <input type="hidden" name="user_course_id" value="<?=$course['user_course_id'];?>">
+                            <?= Html::submitButton(FA::icon('trash', ['class' => 'red action', 'type' => 'submit'])->size(FA::SIZE_2X));?>
+                            
+                            <?php ActiveForm::end(); ?>
+                        </td>
                         </tr>                    
                     <?php } ?>
                 </tbody>
