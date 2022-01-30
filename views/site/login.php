@@ -1,3 +1,6 @@
+<?php
+    use yii\bootstrap4\ActiveForm;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,12 +30,8 @@
 
         if($session->hasFlash('successMessage'))
         {
-            $successes = $session->getFlash('successMessage');
-
-            foreach($successes as $success)
-            {
-                echo "<div class='alert alert-danger' role='alert'>$success[0]</div>";
-            }
+            $success = $session->getFlash('successMessage');
+            echo "<div class='alert alert-success' role='alert'>$success</div>";
         }
 
         ActiveForm::begin([

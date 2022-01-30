@@ -13,8 +13,8 @@ use Yii;
  * @property string|null $created_at
  * @property string|null $updated_at
  *
- * @property Courses $course
- * @property Users $user
+ * @property Course $course
+ * @property User $user
  */
 class UserCourse extends \yii\db\ActiveRecord
 {
@@ -34,8 +34,8 @@ class UserCourse extends \yii\db\ActiveRecord
         return [
             [['user_id', 'course_id'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
-            [['course_id'], 'exist', 'skipOnError' => true, 'targetClass' => Courses::className(), 'targetAttribute' => ['course_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['course_id'], 'exist', 'skipOnError' => true, 'targetClass' => Course::className(), 'targetAttribute' => ['course_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -60,7 +60,7 @@ class UserCourse extends \yii\db\ActiveRecord
      */
     public function getCourse()
     {
-        return $this->hasOne(Courses::className(), ['id' => 'course_id']);
+        return $this->hasOne(Course::className(), ['id' => 'course_id']);
     }
 
     /**
@@ -70,6 +70,6 @@ class UserCourse extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(Users::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 }

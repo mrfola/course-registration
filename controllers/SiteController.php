@@ -7,8 +7,6 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\ContactForm;
 use app\models\User;
 
 class SiteController extends Controller
@@ -77,6 +75,7 @@ class SiteController extends Controller
 
         $user = new User();
         $user->attributes = $request;
+        $user->password = Yii::$app->getSecurity()->generatePasswordHash($request['password']);
         if($user->validate() && $user->save())
         {
             $session->setFlash('successMessage', 'You have successfully registered. Kindly Login');
@@ -96,21 +95,37 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        // if (!Yii::$app->user->isGuest) {
-        //     return $this->goHome();
-        // }
+        if (!Yii::$app->user->isGuest)
+        {
+            return $this->redirect(['course/dashboard']);
+        }
 
-        // $model = new LoginForm();
-        // if ($model->load(Yii::$app->request->post()) && $model->login()) {
-        //     return $this->goBack();
-        // }
+        $request = Yii::$app->request->post();
 
-        // $model->password = '';
-        // return $this->render('login', [
-        //     'model' => $model,
-        // ]);
+        if($request)
+        {
+            $user = new User();
+            $user->email = $request['email'];
+            $user->password = $request['password'];
 
+            if ($user->login())
+            {
+                return $this->redirect(['course/dashboard']);
+            }
+
+            $user->password = '';
+
+            $session = Yii::$app->session;
+            $session->setFlash('errorMessage', $user->getErrors());
+    
+            return $this->render('login', [
+                'user' => $user,
+            ]);
+        }  
+        
+        
         return $this->render('login');
+        
     }
 
     /**
