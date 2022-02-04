@@ -69,7 +69,19 @@ class SiteController extends Controller
 
     public function actionRegister()
     {
-        return $this->render('register');
+        // $departments = Department::find()->all();
+        $faculties = Faculty::find()->all();
+        $schools = School::find()->all();
+        $levels = Level::find()->all();
+        $departments = Department::find()->all();
+
+        $data = [
+            "schools" => $schools,
+            "faculties" => $faculties,
+            "levels" => $levels,
+            "departments" => $departments
+        ];
+        return $this->render('register', $data);
     }
 
     public function actionCreate()
