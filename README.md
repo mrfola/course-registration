@@ -11,6 +11,7 @@ A demo version of the project is live on heroku.
 To login, you can use any of the following credentials: 
 
 **Email: test@gmail.com, Password: test**
+**Email: testMe@gmail.com, Password: testMe**
 
 You can access it here: [Course Registration](http://course-reg.herokuapp.com/). 
 
