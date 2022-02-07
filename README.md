@@ -1,233 +1,63 @@
-<p align="center">
-    <a href="https://github.com/yiisoft" target="_blank">
-        <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
-    </a>
-    <h1 align="center">Yii 2 Basic Project Template</h1>
-    <br>
-</p>
+# Course Registration
 
-Yii 2 Basic Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
-rapidly creating small projects.
+A educational portal for institutions made with [Yii](https://www.yiiframework.com/). It allows students to manages a whole range of activities such as course registration, results checking, timetable, accessing news, etc. 
 
-The template contains the basic features including user login/logout and a contact page.
-It includes all commonly used configurations that would allow you to focus on adding new
-features to your application.
+The project is still in it's initial stages but many new additions are in the works and will be added over the next few months. Some of those change are listed [here](#future-features). 
 
-[![Latest Stable Version](https://img.shields.io/packagist/v/yiisoft/yii2-app-basic.svg)](https://packagist.org/packages/yiisoft/yii2-app-basic)
-[![Total Downloads](https://img.shields.io/packagist/dt/yiisoft/yii2-app-basic.svg)](https://packagist.org/packages/yiisoft/yii2-app-basic)
-[![build](https://github.com/yiisoft/yii2-app-basic/workflows/build/badge.svg)](https://github.com/yiisoft/yii2-app-basic/actions?query=workflow%3Abuild)
+## Accessing The Project
 
-DIRECTORY STRUCTURE
--------------------
+A demo version of the project is live on heroku. 
 
-      assets/             contains assets definition
-      commands/           contains console commands (controllers)
-      config/             contains application configurations
-      controllers/        contains Web controller classes
-      mail/               contains view files for e-mails
-      models/             contains model classes
-      runtime/            contains files generated during runtime
-      tests/              contains various tests for the basic application
-      vendor/             contains dependent 3rd-party packages
-      views/              contains view files for the Web application
-      web/                contains the entry script and Web resources
+To login, you can use any of the following credentials: 
 
+**Email: test@gmail.com, Password: test**
 
+You can access it here: [Course Registration](http://course-reg.herokuapp.com/). 
 
-REQUIREMENTS
-------------
 
-The minimum requirement by this project template that your Web server supports PHP 5.6.0.
+## Concept
+The idea behind this process is to make activities that student carry out on a day-to-day basis, easy, accessible and automated (if possible). 
 
+Students should spend their time on important activities (such as learning, building projects, experimenting, etc) without having to worry about the "admin" side of being a student (keeping track of assignments, course registrations, exam dates, etc).
 
-INSTALLATION
-------------
+This project is geared to help students achieve that.
 
-### Install via Composer
+## Technology
+This project is a monolithic web application created with PHP (using Yii framework) and data is managed with a MySQL database.
 
-If you do not have [Composer](http://getcomposer.org/), you may install it by following the instructions
-at [getcomposer.org](http://getcomposer.org/doc/00-intro.md#installation-nix).
+## Future Features
+* Development of an admin panel where lecturers, head of departments and other school official can upload and manage student-related data for their students. 
 
-You can then install this project template using the following command:
+* Online Testing Capabilities: In future versions of the platform, students will be able to create mock tests for themselves in preparation for exams. Any student can take any mock test created by another student, provided he is given access by the test creator. The administrator from the institution also has the ability to create test (mock or real) and grade students right from the platform. 
 
-~~~
-composer create-project --prefer-dist yiisoft/yii2-app-basic basic
-~~~
+* Assignment Submission: Students will be able to submit assignment and get graded right on the platform. Their scores will automatically be added to their continuous assessment based on the score assignment plan set by the tutor. 
 
-Now you should be able to access the application through the following URL, assuming `basic` is the directory
-directly under the Web root.
+* Score Assessment Plan: This is essentially a plan detailing how a tutor wishes to awards his students grades. For example:
 
-~~~
-http://localhost/basic/web/
-~~~
+  * Week 1: Mock test (ungraded)
+  * Week 2: Mock test (ungraded)
+  * Week 3: Test (20%)
+  * Week 4: Mock test (ungraded)
+  * Week 5: Mock test (ungraded)
+  * Week 6: Test (20%)
+  * Week 7: Mock test (ungraded)
+  * Week 8: Mock test (ungraded)
+  * Week 9: Mock test (ungraded)
+  * Week 10: Mock test (ungraded)
+  * Week 11: Exams (60%) 
 
-### Install from an Archive File
+If the score assessment plan has been created, a tutor can link a test created on the platform to any week in the assessment plan, such that once the test is taken, student scores are automatically saved for that particular week, without the tutor having to do any manual labour.
 
-Extract the archive file downloaded from [yiiframework.com](http://www.yiiframework.com/download/) to
-a directory named `basic` that is directly under the Web root.
+* Transcript Collection: Students will be able to request for their transcript right on the platform. Once they initiate a "transcript request", the admins will be notified and a transcript would be sent to them via the platform. The platform also gives option for "transcript auto-generation". This would allow generation of unofficial transcripts easy for the admins. However signed transcripts still have to be uploaded directly to the platform.
 
-Set cookie validation key in `config/web.php` file to some random secret string:
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-```php
-'request' => [
-    // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-    'cookieValidationKey' => '<secret random string goes here>',
-],
-```
+Please make sure to update tests as appropriate.
 
-You can then access the application through the following URL:
+## Questions and Collaborations
+If you have any questions regarding this project (or any other project) you can send me an email at [folaranmijesutofunmi[at]gmail.com](mailto:folaranmijesutofunmi@gmail.com) and I'll respond as soon as I can. 
 
-~~~
-http://localhost/basic/web/
-~~~
-
-
-### Install with Docker
-
-Update your vendor packages
-
-    docker-compose run --rm php composer update --prefer-dist
-    
-Run the installation triggers (creating cookie validation code)
-
-    docker-compose run --rm php composer install    
-    
-Start the container
-
-    docker-compose up -d
-    
-You can then access the application through the following URL:
-
-    http://127.0.0.1:8000
-
-**NOTES:** 
-- Minimum required Docker engine version `17.04` for development (see [Performance tuning for volume mounts](https://docs.docker.com/docker-for-mac/osxfs-caching/))
-- The default configuration uses a host-volume in your home directory `.docker-composer` for composer caches
-
-
-CONFIGURATION
--------------
-
-### Database
-
-Edit the file `config/db.php` with real data, for example:
-
-```php
-return [
-    'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=yii2basic',
-    'username' => 'root',
-    'password' => '1234',
-    'charset' => 'utf8',
-];
-```
-
-**NOTES:**
-- Yii won't create the database for you, this has to be done manually before you can access it.
-- Check and edit the other files in the `config/` directory to customize your application as required.
-- Refer to the README in the `tests` directory for information specific to basic application tests.
-
-
-TESTING
--------
-
-Tests are located in `tests` directory. They are developed with [Codeception PHP Testing Framework](http://codeception.com/).
-By default, there are 3 test suites:
-
-- `unit`
-- `functional`
-- `acceptance`
-
-Tests can be executed by running
-
-```
-vendor/bin/codecept run
-```
-
-The command above will execute unit and functional tests. Unit tests are testing the system components, while functional
-tests are for testing user interaction. Acceptance tests are disabled by default as they require additional setup since
-they perform testing in real browser. 
-
-
-### Running  acceptance tests
-
-To execute acceptance tests do the following:  
-
-1. Rename `tests/acceptance.suite.yml.example` to `tests/acceptance.suite.yml` to enable suite configuration
-
-2. Replace `codeception/base` package in `composer.json` with `codeception/codeception` to install full-featured
-   version of Codeception
-
-3. Update dependencies with Composer 
-
-    ```
-    composer update  
-    ```
-
-4. Download [Selenium Server](http://www.seleniumhq.org/download/) and launch it:
-
-    ```
-    java -jar ~/selenium-server-standalone-x.xx.x.jar
-    ```
-
-    In case of using Selenium Server 3.0 with Firefox browser since v48 or Google Chrome since v53 you must download [GeckoDriver](https://github.com/mozilla/geckodriver/releases) or [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/downloads) and launch Selenium with it:
-
-    ```
-    # for Firefox
-    java -jar -Dwebdriver.gecko.driver=~/geckodriver ~/selenium-server-standalone-3.xx.x.jar
-    
-    # for Google Chrome
-    java -jar -Dwebdriver.chrome.driver=~/chromedriver ~/selenium-server-standalone-3.xx.x.jar
-    ``` 
-    
-    As an alternative way you can use already configured Docker container with older versions of Selenium and Firefox:
-    
-    ```
-    docker run --net=host selenium/standalone-firefox:2.53.0
-    ```
-
-5. (Optional) Create `yii2basic_test` database and update it by applying migrations if you have them.
-
-   ```
-   tests/bin/yii migrate
-   ```
-
-   The database configuration can be found at `config/test_db.php`.
-
-
-6. Start web server:
-
-    ```
-    tests/bin/yii serve
-    ```
-
-7. Now you can run all available tests
-
-   ```
-   # run all available tests
-   vendor/bin/codecept run
-
-   # run acceptance tests
-   vendor/bin/codecept run acceptance
-
-   # run only unit and functional tests
-   vendor/bin/codecept run unit,functional
-   ```
-
-### Code coverage support
-
-By default, code coverage is disabled in `codeception.yml` configuration file, you should uncomment needed rows to be able
-to collect code coverage. You can run your tests and collect coverage with the following command:
-
-```
-#collect coverage for all tests
-vendor/bin/codecept run --coverage --coverage-html --coverage-xml
-
-#collect coverage only for unit tests
-vendor/bin/codecept run unit --coverage --coverage-html --coverage-xml
-
-#collect coverage for unit and functional tests
-vendor/bin/codecept run functional,unit --coverage --coverage-html --coverage-xml
-```
-
-You can see code coverage output under the `tests/_output` directory.
+## Other projects you might love
+* [Real Estate API](https://github.com/mrfola/real-estate)
+* [Job Scraper](https://github.com/mrfola/laravelJobScraper)
