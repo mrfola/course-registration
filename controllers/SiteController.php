@@ -69,18 +69,32 @@ class SiteController extends Controller
 
     public function actionRegister()
     {
+        $request = Yii::$app->request->get();
+
         // $departments = Department::find()->all();
         $faculties = Faculty::find()->all();
         $schools = School::find()->all();
-        $levels = Level::find()->all();
-        $departments = Department::find()->all();
 
         $data = [
             "schools" => $schools,
             "faculties" => $faculties,
-            "levels" => $levels,
-            "departments" => $departments
         ];
+
+        if(isset($request['faculty']))
+        {
+            $departments = Department::find()->where(['faculty_id' => $request['faculty']])->all();
+            $data["departments"] = $departments;
+            $data["selectedFaculty"] = $request['faculty'];
+        }
+
+        if(isset($request['department']))
+        {
+
+            $selectedDepartment = Department::findOne($request['department']);
+            $data["levels"] = $selectedDepartment->levels;
+            $data["selectedDepartment"] = $request['department'];
+        }
+
         return $this->render('register', $data);
     }
 

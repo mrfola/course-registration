@@ -26,9 +26,6 @@ class m220129_063740_create_user_courses_table extends Migration
         //foreign keys
         $this->addForeignKey ('FK_user_courses_to_users', $tableName, 'user_id', 'users', 'id', 'CASCADE', 'CASCADE');
         $this->addForeignKey ('FK_user_courses_to_courses', $tableName, 'course_id', 'courses', 'id', 'CASCADE', 'CASCADE');
-
-
-
     }
 
     /**

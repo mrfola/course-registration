@@ -3,7 +3,6 @@
 namespace app\models;
 
 use Yii;
-use app\models\Level;
 
 /**
  * This is the model class for table "departments".
@@ -18,7 +17,7 @@ use app\models\Level;
  * @property Faculty $faculty
  * @property User[] $users
  */
-class Department extends \yii\db\ActiveRecord
+class DepartmentLevel extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -49,51 +48,27 @@ class Department extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'faculty_id' => 'Faculty ID',
+            'department_id' => 'Department ID',
+            'level_id' => 'Level ID',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
     }
 
-    /**
-     * Gets query for [[Course]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCourses()
-    {
-        return $this->hasMany(Course::className(), ['department_id' => 'id']);
-    }
 
     /**
      * Gets query for [[Faculty]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getFaculty()
+    public function getLevels()
     {
-        return $this->hasOne(Faculty::className(), ['id' => 'faculty_id']);
+        return $this->hasMany(Level::className(), ['id' => 'level_id']);
     }
 
-    /**
-     * Gets query for [[User]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUsers()
-    {
-        return $this->hasMany(User::className(), ['department_id' => 'id']);
-    }
 
     public function getDepartmentLevels()
     {
-        return $this->hasMany(DepartmentLevel::className(), ['department_id' => 'id']);
-    }
-
-    public function getLevels()
-    {
-        return $this->hasMany(Level::className(), ['id' => 'level_id'])
-                    ->viaTable('department_levels', ['department_id' => 'id']);
+        return $this->hasMany(Department::className(), ['id' => 'department_id']);
     }
 }

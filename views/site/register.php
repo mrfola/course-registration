@@ -37,22 +37,46 @@
         <div class="form-group">
             <div class="mb-4">
                 <label for="Name">Name</label>
-                <input class="form-control" type="text" name="name" required>
+                <input 
+                class="form-control"
+                type="text"
+                name="name"
+                id="name"
+                onblur="handleNameOnBlur(this.value)"
+                required
+                >
+
             </div>
             
             <div class="mb-4">
                 <label for="email">Email</label>
-                <input type="email" name="email" class="form-control" required>
+                <input
+                class="form-control"
+                type="email"
+                name="email"
+                id="email"
+                onblur="handleEmailOnBlur(this.value)"
+                required>
             </div>
+
             <div class="mb-4">
                 <label for="password">Password</label>
                 <input type="password" name="password" class="form-control" required>
             </div>
             <div class="mb-4">
                 <label for="faculty_id">Faculty</label>
-                <select  name="faculty_id" class="form-control" required onchange="getAllDepartments(this.value)">
+                <select 
+                 name="faculty_id"
+                 class="form-control"
+                 required 
+                 onchange="getAllDepartments(this.value)"
+                 >
+                 <option value="" selected>Please Select</option>
                 <?php foreach($faculties as $faculty){ ?>
-                    <option value='<?=$faculty->id;?>'>
+                    <option 
+                    value='<?=$faculty->id;?>'
+                    <?= (isset($selectedFaculty) && $selectedFaculty == $faculty->id) ? "selected" : ''; ?>
+                    >
                         <?= $faculty->name; ?>
                     </option>
                 <?php } ?>
@@ -60,23 +84,68 @@
             </div>
             <div class="mb-4">
                 <label for="department_id">Department</label>
-                <select name="department_id" class="form-control" required>
+                <select 
+                name="department_id"
+                class="form-control"
+                required
+                onchange="getAllLevels(this.value)"
+                >
+
+                <option value='' selected>Please Select</option>
+                <?php
+
+                if(isset($selectedFaculty))
+                {
+                    foreach($departments as $department)
+                    { 
+                ?>
+                    <option 
+                    value='<?=$department->id;?>'
+                    <?= (isset($selectedDepartment) && $selectedDepartment == $department->id) ? "selected" : ''; ?>
+                    >
+                        <?= $department->name; ?>
+                    </option>
+                <?php 
+                    } 
+                }
+                 ?>
 
                 </select>
             </div>
+
             <div class="mb-4">
                 <label for="level_id">Level</label>
-                <select name="level_id" class="form-control" required>
-                <?php foreach($levels as $level){ ?>
-                    <option value='<?=$level->id;?>'>
-                        <?= $level->name; ?>
-                    </option>
-                <?php } ?>
+                <select
+                id="level"
+                name="level_id"
+                class="form-control"
+                required
+                >
+                <option value="" selected>Please Select</option>
+
+                <?php 
+                if(isset($selectedDepartment))
+                {
+                    foreach($levels as $level)
+                    { 
+                ?>
+                    <option value='<?=$level->id;?>'> <?= $level->name; ?></option>
+                <?php 
+                    } 
+                }
+                 ?>
                 </select>
             </div>
+
             <div class="mb-4">
                 <label for="school_id">School</label>
-                <select name="school_id" class="form-control" required>
+                <select 
+                name="school_id"
+                class="form-control"
+                id="school"
+                onblur="handleSchoolOnBlur(this.value)"
+                required>
+                <option value="" selected>Please Select</option>
                 <?php foreach($schools as $school){ ?>
                     <option value='<?=$school->id;?>'>
                         <?= $school->name; ?>
@@ -92,35 +161,48 @@
             ActiveForm::end();
         ?>
     </div>
-
-    <?php $test = [[1,2,3], [4,5,6], [7,8,9]]; ?>
-
-    <?php 
-        foreach($departments as $department)
-        {
-            var_dump($department['name']);
-        }
-    ?>
             
     <script type="text/javascript">
         
+        //For name input field
+        let nameInput = document.querySelector('#name');
+        if(localStorage.getItem('registerName') != null)
+        {
+            nameInput.setAttribute('value', localStorage.getItem('registerName'));
+            console.log(localStorage.getItem('registerName'));
+        }
+        const handleNameOnBlur = () => localStorage.setItem('registerName', nameInput.value);
 
-        const getAllDepartments = (faculty_id) => {
+        //For email input field
+        let emailInput = document.querySelector('#email');
+        if(localStorage.getItem('registerEmail') != null)
+        {
+            emailInput.setAttribute('value', localStorage.getItem('registerEmail'));
+        }
+        const handleEmailOnBlur = () => localStorage.setItem('registerEmail', emailInput.value);
 
-            const departments = <?php echo(json_encode($departments)); ?>;
+        //For school select field
+        let schoolInput = document.querySelector('#school');
+        if(localStorage.getItem('registerSchool') != null)
+        {
+            schoolInput.value = localStorage.getItem('registerSchool');
+            console.log(localStorage.getItem('registerSchool'));
+        }
 
+        const handleSchoolOnBlur = () => 
+        {
+            console.log(schoolInput.options[schoolInput.selectedIndex].text);
+            localStorage.setItem('registerSchool', schoolInput.value);
+        }
 
-            const test = <?php echo(json_encode($test)); ?>;
-            const newDepartments = departments.filter( (department) => {
-                return department == faculty_id;
-            });
+        const getAllDepartments = (faculty_id) => 
+        {
+        window.location.href = window.location.href+`&faculty=${faculty_id}`;
+        }
 
-            // departments.forEach( (department) => {
-            //     console.log(department['id']);
-            // })
-
-            console.log(departments);
-
+        const getAllLevels = (department_id) => 
+        {
+            window.location.href = window.location.href+`&department=${department_id}`;
         }
 
     </script>
